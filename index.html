@@ -27,19 +27,33 @@
   <!-- fav icon -->
 
   <script src="./dist/bundle.js"></script>
-  <title>XXXX VIZ NAME HERE XXXX</title>
+  <title>Useless Swiss Army Bar Chart</title>
 </head>
 
 <body>
 
   <header>
-    <h1>XXXX VIZ NAME HERE XXXX</h1>
+    <h1>Useless Swiss Army Bar Chart</h1>
     <a href="https://masonchinkin.github.io/#d3-projects" target="_blank">
       <i class="fas fa-long-arrow-alt-left"></i> Back</a>
   </header>
 
   <main>
     <!-- Viz here -->
+    <p>The goal: fit as many useless functions into a bar chart as possible
+      without breaking it.</p>
+    <div align="center">
+      <button id='add'>add a bar!</button>
+      <button id='subtract'>remove a bar!</button>
+      <button id='sort'>sort the bars!!!</button>
+    </div>
+
+    <div id="container" class="container visualization"></div>
+
+    <div id="tooltip" class="hidden">
+      <p><strong>Value</strong></p>
+      <p><span id="value">100</span></p>
+    </div>
   </main>
 
   <footer>
