@@ -39860,6 +39860,82 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./src/js/data.js":
+/*!************************!*\
+  !*** ./src/js/data.js ***!
+  \************************/
+/*! exports provided: barDataset */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "barDataset", function() { return barDataset; });
+var barDataset = [{
+  key: 0,
+  value: 5
+}, //dataset is now an array of objects.
+{
+  key: 1,
+  value: 10
+}, //Each object has a 'key' and a 'value'.
+{
+  key: 2,
+  value: 13
+}, {
+  key: 3,
+  value: 19
+}, {
+  key: 4,
+  value: 21
+}, {
+  key: 5,
+  value: 25
+}, {
+  key: 6,
+  value: 22
+}, {
+  key: 7,
+  value: 18
+}, {
+  key: 8,
+  value: 15
+}, {
+  key: 9,
+  value: 13
+}, {
+  key: 10,
+  value: 11
+}, {
+  key: 11,
+  value: 12
+}, {
+  key: 12,
+  value: 15
+}, {
+  key: 13,
+  value: 20
+}, {
+  key: 14,
+  value: 18
+}, {
+  key: 15,
+  value: 17
+}, {
+  key: 16,
+  value: 16
+}, {
+  key: 17,
+  value: 18
+}, {
+  key: 18,
+  value: 23
+}, {
+  key: 19,
+  value: 25
+}];
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -39870,6 +39946,8 @@ if(false) {}
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data */ "./src/js/data.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var w = container.offsetWidth;
@@ -39877,8 +39955,8 @@ __webpack_require__.r(__webpack_exports__);
   var margin = {
     right: 50,
     left: 50,
-    top: 0,
-    bottom: 0 //properties of mouseout
+    top: 20,
+    bottom: 20 //properties of mouseout
 
   };
 
@@ -39886,7 +39964,7 @@ __webpack_require__.r(__webpack_exports__);
     d3__WEBPACK_IMPORTED_MODULE_0__["select"](this).transition('orangeHover').duration(250).attr('fill', function (d) {
       //find cy of slider
       var handleCy = document.getElementById('handle').getAttribute('cy');
-      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
         return d.value;
       }) - y.invert(+handleCy) >= d.value ? 'orange' : 'rgb(0,0, ' + Math.floor(y(d.value)) + ')';
     }); //Hide the tooltip
@@ -39905,82 +39983,18 @@ __webpack_require__.r(__webpack_exports__);
     d3__WEBPACK_IMPORTED_MODULE_0__["select"]('#tooltip').classed('hidden', false);
   };
 
-  var barDataset = [{
-    key: 0,
-    value: 5
-  }, //dataset is now an array of objects.
-  {
-    key: 1,
-    value: 10
-  }, //Each object has a 'key' and a 'value'.
-  {
-    key: 2,
-    value: 13
-  }, {
-    key: 3,
-    value: 19
-  }, {
-    key: 4,
-    value: 21
-  }, {
-    key: 5,
-    value: 25
-  }, {
-    key: 6,
-    value: 22
-  }, {
-    key: 7,
-    value: 18
-  }, {
-    key: 8,
-    value: 15
-  }, {
-    key: 9,
-    value: 13
-  }, {
-    key: 10,
-    value: 11
-  }, {
-    key: 11,
-    value: 12
-  }, {
-    key: 12,
-    value: 15
-  }, {
-    key: 13,
-    value: 20
-  }, {
-    key: 14,
-    value: 18
-  }, {
-    key: 15,
-    value: 17
-  }, {
-    key: 16,
-    value: 16
-  }, {
-    key: 17,
-    value: 18
-  }, {
-    key: 18,
-    value: 23
-  }, {
-    key: 19,
-    value: 25
-  }];
-
   var key = function key(d) {
     return d.key;
   }; //SCALES
 
 
-  var x = d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"]().domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](barDataset.length)).rangeRound([0, w - margin.right]).paddingInner(0.05);
-  var y = d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"]().domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+  var x = d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"]().domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].length)).rangeRound([0, w - margin.right]).paddingInner(0.05);
+  var y = d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"]().domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
     return d.value;
-  })]).range([0, h - margin.top]).clamp(true);
+  })]).range([margin.top, h - margin.bottom]).clamp(true);
   var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]('#container').append('svg').attr('width', w).attr('height', h); //BARS
 
-  var bars = svg.selectAll('rect').data(barDataset, key);
+  var bars = svg.selectAll('rect').data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], key);
   bars.enter().append('rect').attr('x', function (d, i) {
     return x(i);
   }).attr('y', function (d) {
@@ -39991,7 +40005,7 @@ __webpack_require__.r(__webpack_exports__);
     return 'rgb(0,0, ' + Math.floor(y(d.value)) + ')';
   }).on('mousemove', barMouseMove).on('mouseout', barMouseOut); //LABELS
 
-  var text = svg.selectAll('text').data(barDataset, key);
+  var text = svg.selectAll('text').data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], key);
   text.enter().append('text').text(function (d) {
     return d.value;
   }).attr('x', function (d, i) {
@@ -40008,7 +40022,7 @@ __webpack_require__.r(__webpack_exports__);
   }).attr('class', 'track-overlay').call(d3__WEBPACK_IMPORTED_MODULE_0__["drag"]().on('drag', function () {
     slide(y.invert(d3__WEBPACK_IMPORTED_MODULE_0__["event"].y));
     d3__WEBPACK_IMPORTED_MODULE_0__["selectAll"]('rect').attr('fill', function (d) {
-      if (d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+      if (d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
         return d.value;
       }) - y.invert(d3__WEBPACK_IMPORTED_MODULE_0__["event"].y) >= d.value) {
         return 'orange';
@@ -40029,21 +40043,21 @@ __webpack_require__.r(__webpack_exports__);
     var maxValue = 40; //max value for any randomiz data
 
     var newNumber = Math.floor(Math.random() * maxValue);
-    var lastKeyNumber = d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+    var lastKeyNumber = d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
       return d.key;
     });
-    barDataset.push({
+    _data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].push({
       key: lastKeyNumber + 1,
       value: newNumber //Add new number to array
 
     }); //UPDATE SCALES
 
-    x.domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](barDataset.length));
-    y.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+    x.domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].length));
+    y.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
       return d.value;
     })]);
     var bars = svg.selectAll('rect') //SELECT
-    .data(barDataset); //Transition BARS
+    .data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"]); //Transition BARS
 
     bars.enter() //ENTER
     .append('rect').attr('x', w).attr('y', function (d) {
@@ -40052,7 +40066,7 @@ __webpack_require__.r(__webpack_exports__);
       return y(d.value);
     }).attr('fill', function (d) {
       var handleCy = document.getElementById('handle').getAttribute('cy');
-      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
         return d.value;
       }) - y.invert(+handleCy) >= d.value ? 'orange' : 'rgb(0,0, ' + Math.floor(y(d.value)) + ')';
     }).on('mousemove', barMouseMove).on('mouseout', barMouseOut).merge(bars).transition('barsAddBar').duration(250).attr('x', function (d, i) {
@@ -40064,12 +40078,12 @@ __webpack_require__.r(__webpack_exports__);
     }).attr('fill', function (d) {
       //find cy of slider
       var handleCy = document.getElementById('handle').getAttribute('cy');
-      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
         return d.value;
       }) - y.invert(+handleCy) >= d.value ? 'orange' : 'rgb(0,0, ' + Math.floor(y(d.value)) + ')';
     }); //TRANSITION LABELS
 
-    var text = svg.selectAll('text').data(barDataset);
+    var text = svg.selectAll('text').data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"]);
     text.enter().append('text').text(function (d) {
       return d.value;
     }).attr('x', w + x.bandwidth() / 2).attr('y', function (d) {
@@ -40085,19 +40099,19 @@ __webpack_require__.r(__webpack_exports__);
     });
   });
   d3__WEBPACK_IMPORTED_MODULE_0__["select"]('#subtract').on('click', function () {
-    barDataset.shift();
+    _data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].shift();
     var bars = svg.selectAll('rect') //SELECT
-    .data(barDataset, key);
+    .data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], key);
     bars.exit() //EXIT
     .transition('exitBars').duration(250).attr('x', -x.bandwidth()) //EXIT STAGE LEFT
     .remove();
-    var text = svg.selectAll('text').data(barDataset, key);
+    var text = svg.selectAll('text').data(_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], key);
     text.exit() //EXIT
     .transition().duration(250).attr('x', -x.bandwidth() / 2) //EXIT STAGE LEFT
     .remove(); //UPDATE SCALES
 
-    x.domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](barDataset.length));
-    y.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+    x.domain(d3__WEBPACK_IMPORTED_MODULE_0__["range"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].length));
+    y.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
       return d.value;
     })]);
     bars.transition('barsRemoveBar').duration(250).attr('x', function (d, i) {
@@ -40109,7 +40123,7 @@ __webpack_require__.r(__webpack_exports__);
     }).attr('fill', function (d) {
       //find cy of slider
       var handleCy = document.getElementById('handle').getAttribute('cy');
-      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](barDataset, function (d) {
+      return d3__WEBPACK_IMPORTED_MODULE_0__["max"](_data__WEBPACK_IMPORTED_MODULE_1__["barDataset"], function (d) {
         return d.value;
       }) - y.invert(+handleCy) >= d.value ? 'orange' : 'rgb(0,0, ' + Math.floor(y(d.value)) + ')';
     });
@@ -40141,7 +40155,7 @@ __webpack_require__.r(__webpack_exports__);
     }).transition('sortText').duration(250).attr('x', function (d, i) {
       return x(i) + x.bandwidth() / 2;
     });
-    barDataset.sort(function (a, b) {
+    _data__WEBPACK_IMPORTED_MODULE_1__["barDataset"].sort(function (a, b) {
       return a.value - b.value;
     });
   });
